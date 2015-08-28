@@ -55,6 +55,11 @@ mixed status of all active channels.
 
   Returns the list of active controllers.
 
+- MidiMaster.GetPitchBend (channel)
+
+  Returns the pitch bend value. The value ranges from -1.0 (full down)
+  to 1.0 (full up), with 0.0 as center (no pitch bend).
+
 There are also delegates for the each type of MIDI event.
 
 - MidiMaster.noteOnDelegate (channel, noteNumber, velocity)
