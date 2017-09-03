@@ -263,17 +263,10 @@ namespace MidiJack
                 if (statusCode == 0xe)
                 {
                     // Pitch bend is measured by a fourteen bit value. Center (no pitch change) is 0x2000
-                    if (message.data1 == 0x7f && message.data2 == 0x7f)
-                    {
-                        _channelArray[channelNumber]._pitchBend = 1.0f;
-                        _channelArray[(int)MidiChannel.All]._pitchBend = 1.0f;
-                    }
-                    else
-                    {
-                        var value = 1.0f / 8192 * (message.data2 + (message.data1 << 7)) - 1;
-                        _channelArray[channelNumber]._pitchBend = value;
-                        _channelArray[(int)MidiChannel.All]._pitchBend = value;
-                    }
+                    var bend = (message.data2 << 7) + message.data1 - 8192;
+                    var value = bend / (bend > 0 ? 8191f : 8192f);
+                    _channelArray[channelNumber]._pitchBend = value;
+                    _channelArray[(int)MidiChannel.All]._pitchBend = value;
                 }
 
                 #if UNITY_EDITOR
